@@ -1,4 +1,5 @@
 import sys
+from tabulate import tabulate
 
 if len(sys.argv) > 2:
     sys.exit('Too many command-line arguments')
@@ -10,7 +11,8 @@ else:
     else:
         try:
             with open(sys.argv[1]) as file:
-                for line in file:
-                    print(line, end='')
+                table_data = [line.strip().split(',') for line in file]
         except FileNotFoundError:
             sys.exit('File does not exist')
+
+print(tabulate(table_data, headers='firstrow', tablefmt='grid'))
